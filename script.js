@@ -125,13 +125,22 @@ function moveNoButton(speedMultiplier = 1) {
 }
 
 function showTeasingMessage(text) {
+    // Get YES button position
+    const yesButton = elements.yesButton;
+    const buttonRect = yesButton.getBoundingClientRect();
+    
     // Create temporary teasing message
     const msg = document.createElement('div');
     msg.textContent = text;
+    
+    // Position it above the YES button
+    const topPosition = buttonRect.top - 100; // 100px above button
+    const leftPosition = buttonRect.left + (buttonRect.width / 2);
+    
     msg.style.cssText = `
         position: fixed;
-        top: 20%;
-        left: 50%;
+        top: ${topPosition}px;
+        left: ${leftPosition}px;
         transform: translateX(-50%);
         background: rgba(255, 64, 129, 0.95);
         color: white;
@@ -142,6 +151,8 @@ function showTeasingMessage(text) {
         z-index: 1000;
         animation: fadeInOutMessage 2s ease;
         box-shadow: 0 10px 40px rgba(255, 64, 129, 0.6);
+        pointer-events: none;
+        white-space: nowrap;
     `;
     document.body.appendChild(msg);
     setTimeout(() => msg.remove(), 2000);
