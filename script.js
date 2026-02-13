@@ -353,7 +353,7 @@ function initializeEventListeners() {
         
         // 2ND CLICK - ACTUALLY WORKS!
         if (yesButtonClicks >= 2) {
-            showTeasingMessage("Okay fine! You convinced me! 💕");
+            showTeasingMessage("Heyyy love youuhh !! 💕");
             setTimeout(() => {
                 showSuccessPage();
             }, 1000);
