@@ -292,23 +292,27 @@ function resetToQuestion() {
     gameStage = 0;
     yesButtonScale = 1;
     noButtonScale = 1;
-    buttonsSwapped = false;
     
     // Reset button styles
     elements.yesButton.style.transform = 'scale(1)';
     elements.noButton.style.transform = 'scale(1)';
     
-    // Reset button positions
-    if (window.innerWidth > 768) {
-        elements.noButton.style.position = 'absolute';
-        elements.noButton.style.left = '';
-        elements.noButton.style.top = '';
-    }
+    // Reset button positions - MAKE SURE NO IS VISIBLE
+    elements.noButton.style.position = 'relative';
+    elements.noButton.style.left = '0';
+    elements.noButton.style.top = '0';
+    elements.noButton.style.transition = 'all 0.3s ease';
     
     // Reset button order if swapped
     if (buttonsSwapped) {
-        swapButtons();
+        const container = document.querySelector('.button-container');
+        const yesButton = elements.yesButton;
+        const noButton = elements.noButton;
+        container.insertBefore(yesButton, noButton);
+        buttonsSwapped = false;
     }
+    
+    console.log('🔄 Game reset - Ready to play again!');
 }
 
 // ===== EVENT LISTENERS =====
