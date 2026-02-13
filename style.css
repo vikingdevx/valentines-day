@@ -1006,12 +1006,12 @@ button span {
 .video-polaroid {
     background: white;
     padding: 15px;
-    padding-bottom: 45px;
+    padding-bottom: 35px;
     border-radius: 3px;
     box-shadow: 
         0 4px 6px rgba(0, 0, 0, 0.1),
         0 10px 40px rgba(0, 0, 0, 0.2);
-    max-width: 500px;
+    max-width: 550px;
     width: 100%;
     margin: 0 auto;
     transition: all 0.3s ease;
@@ -1033,14 +1033,16 @@ button span {
 
 .video-polaroid-inner video {
     width: 100%;
-    height: auto;
+    min-height: 350px;
+    max-height: 450px;
+    object-fit: cover;
     display: block;
     background: #000;
     border-radius: 2px;
 }
 
 .video-caption {
-    margin-top: 12px;
+    margin-top: 10px;
     font-family: 'Caveat', cursive;
     font-size: 2.2rem;
     font-weight: 700;
@@ -1080,12 +1082,17 @@ button span {
     .video-polaroid {
         max-width: 100%;
         padding: 12px;
-        padding-bottom: 40px;
+        padding-bottom: 35px;
+    }
+    
+    .video-polaroid-inner video {
+        min-height: 300px;
+        max-height: 400px;
     }
     
     .video-caption {
         font-size: 2rem !important;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 }
 
@@ -1093,7 +1100,12 @@ button span {
 @media (max-width: 400px) {
     .video-polaroid {
         padding: 10px;
-        padding-bottom: 38px;
+        padding-bottom: 32px;
+    }
+    
+    .video-polaroid-inner video {
+        min-height: 280px;
+        max-height: 360px;
     }
     
     .video-caption {
