@@ -314,14 +314,59 @@ function resetToQuestion() {
         buttonsSwapped = false;
     }
     
+    // Reset YES button click counter
+    yesButtonClicks = 0;
+    
     console.log('🔄 Game reset - NO button should be visible now!');
 }
 
+// ===== YES BUTTON TEASING COUNTER =====
+let yesButtonClicks = 0;
+
 // ===== EVENT LISTENERS =====
 function initializeEventListeners() {
-    // Yes button click
-    elements.yesButton.addEventListener('click', () => {
-        showSuccessPage();
+    // Yes button click - with teasing!
+    elements.yesButton.addEventListener('click', (e) => {
+        yesButtonClicks++;
+        
+        // TEASE HER FOR FIRST 3 CLICKS!
+        if (yesButtonClicks === 1) {
+            e.preventDefault();
+            showTeasingMessage("Wait... are you SURE? 🤔");
+            elements.yesButton.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                elements.yesButton.style.animation = '';
+            }, 500);
+            return;
+        }
+        
+        if (yesButtonClicks === 2) {
+            e.preventDefault();
+            showTeasingMessage("Really? No take-backs! 😏");
+            elements.yesButton.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                elements.yesButton.style.animation = '';
+            }, 500);
+            return;
+        }
+        
+        if (yesButtonClicks === 3) {
+            e.preventDefault();
+            showTeasingMessage("Last chance to change your mind! 😈");
+            elements.yesButton.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                elements.yesButton.style.animation = '';
+            }, 500);
+            return;
+        }
+        
+        // 4TH CLICK - ACTUALLY WORKS!
+        if (yesButtonClicks >= 4) {
+            showTeasingMessage("Okay fine! You convinced me! 💕");
+            setTimeout(() => {
+                showSuccessPage();
+            }, 1000);
+        }
     });
     
     // Play again button click

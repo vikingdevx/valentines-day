@@ -348,6 +348,15 @@ button span {
     animation: shrinkButton 0.3s forwards;
 }
 
+/* Shake animation for YES button teasing */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+}
+
+
 @keyframes shrinkButton {
     to {
         transform: scale(0.8);
