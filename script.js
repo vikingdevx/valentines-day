@@ -340,7 +340,7 @@ function initializeEventListeners() {
     elements.yesButton.addEventListener('click', (e) => {
         yesButtonClicks++;
         
-        // TEASE HER FOR FIRST 3 CLICKS!
+        // TEASE HER FOR FIRST CLICK!
         if (yesButtonClicks === 1) {
             e.preventDefault();
             showTeasingMessage("Wait... are you SURE? 🤔");
@@ -351,28 +351,8 @@ function initializeEventListeners() {
             return;
         }
         
-        if (yesButtonClicks === 2) {
-            e.preventDefault();
-            showTeasingMessage("Really? No take-backs! 😏");
-            elements.yesButton.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-                elements.yesButton.style.animation = '';
-            }, 500);
-            return;
-        }
-        
-        if (yesButtonClicks === 3) {
-            e.preventDefault();
-            showTeasingMessage("Last chance to change your mind! 😈");
-            elements.yesButton.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-                elements.yesButton.style.animation = '';
-            }, 500);
-            return;
-        }
-        
-        // 4TH CLICK - ACTUALLY WORKS!
-        if (yesButtonClicks >= 4) {
+        // 2ND CLICK - ACTUALLY WORKS!
+        if (yesButtonClicks >= 2) {
             showTeasingMessage("Okay fine! You convinced me! 💕");
             setTimeout(() => {
                 showSuccessPage();
