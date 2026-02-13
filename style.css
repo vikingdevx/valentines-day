@@ -753,7 +753,7 @@ button span {
     text-shadow: 0 2px 4px rgba(255, 64, 129, 0.2);
 }
 
-/* Heart Sticker on ALL Photos */
+/* Heart Sticker on ALL Photos - Default Top-Right */
 .polaroid .polaroid-front::after {
     content: '💕';
     position: absolute;
@@ -763,6 +763,17 @@ button span {
     transform: rotate(15deg);
     filter: drop-shadow(0 3px 8px rgba(255, 64, 129, 0.4));
     animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+/* Zig-Zag Pattern - Photos 1, 4, 5 get bottom-left hearts */
+.polaroid:nth-child(1) .polaroid-front::after,
+.polaroid:nth-child(4) .polaroid-front::after,
+.polaroid:nth-child(5) .polaroid-front::after {
+    top: auto;
+    bottom: 70px;
+    right: auto;
+    left: 25px;
+    transform: rotate(-15deg);
 }
 
 @keyframes heartBeat {
@@ -883,6 +894,16 @@ button span {
         font-size: 2rem;
         top: 20px;
         right: 20px;
+    }
+    
+    /* Zig-zag pattern on mobile */
+    .polaroid:nth-child(1) .polaroid-front::after,
+    .polaroid:nth-child(4) .polaroid-front::after,
+    .polaroid:nth-child(5) .polaroid-front::after {
+        top: auto;
+        bottom: 65px;
+        right: auto;
+        left: 20px;
     }
     
     /* Play Again button - bigger */
