@@ -77,6 +77,8 @@ body::before {
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .name-text {
@@ -91,20 +93,24 @@ body::before {
         0 0 10px rgba(255, 64, 129, 0.5),
         0 0 20px rgba(255, 64, 129, 0.3),
         0 0 30px rgba(255, 64, 129, 0.2);
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 @keyframes floatName {
     0%, 100% {
-        transform: translateY(0) rotate(var(--rotation, 0deg));
+        transform: translate3d(0, 0, 0) rotate(var(--rotation, 0deg));
     }
     25% {
-        transform: translateY(-20px) rotate(calc(var(--rotation, 0deg) + 5deg));
+        transform: translate3d(0, -20px, 0) rotate(calc(var(--rotation, 0deg) + 5deg));
     }
     50% {
-        transform: translateY(0) rotate(var(--rotation, 0deg));
+        transform: translate3d(0, 0, 0) rotate(var(--rotation, 0deg));
     }
     75% {
-        transform: translateY(-15px) rotate(calc(var(--rotation, 0deg) - 5deg));
+        transform: translate3d(0, -15px, 0) rotate(calc(var(--rotation, 0deg) - 5deg));
     }
 }
 
@@ -911,6 +917,21 @@ button span {
         padding: 1.2rem 3rem !important;
         font-size: 1.4rem !important;
         margin-top: 2.5rem;
+    }
+    
+    /* Performance optimization for mobile scrolling */
+    .names-background {
+        opacity: 0.5;
+    }
+    
+    .name-text {
+        animation-duration: 30s !important;
+        text-shadow: 0 0 5px rgba(255, 64, 129, 0.3);
+    }
+    
+    body::before {
+        animation: none;
+        opacity: 0.2;
     }
     
     /* Background names - optimized for mobile */
