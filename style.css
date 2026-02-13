@@ -985,7 +985,7 @@ button span {
 .video-polaroid {
     background: white;
     padding: 15px;
-    padding-bottom: 60px;
+    padding-bottom: 45px;
     border-radius: 3px;
     box-shadow: 
         0 4px 6px rgba(0, 0, 0, 0.1),
@@ -1019,9 +1019,9 @@ button span {
 }
 
 .video-caption {
-    margin-top: 15px;
+    margin-top: 12px;
     font-family: 'Caveat', cursive;
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: #333;
     text-align: center;
@@ -1053,21 +1053,18 @@ button span {
     
     .video-title {
         font-size: 2.2rem !important;
-    }
-    
-    .video-subtitle {
-        font-size: 1.1rem !important;
         margin-bottom: 1.5rem;
     }
     
     .video-polaroid {
         max-width: 100%;
         padding: 12px;
-        padding-bottom: 50px;
+        padding-bottom: 40px;
     }
     
     .video-caption {
-        font-size: 1.8rem !important;
+        font-size: 2rem !important;
+        margin-top: 10px;
     }
 }
 
@@ -1075,11 +1072,11 @@ button span {
 @media (max-width: 400px) {
     .video-polaroid {
         padding: 10px;
-        padding-bottom: 45px;
+        padding-bottom: 38px;
     }
     
     .video-caption {
-        font-size: 1.6rem !important;
+        font-size: 1.8rem !important;
     }
 }
 
