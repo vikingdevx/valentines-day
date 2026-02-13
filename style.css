@@ -753,8 +753,8 @@ button span {
     text-shadow: 0 2px 4px rgba(255, 64, 129, 0.2);
 }
 
-/* Heart Sticker on Some Photos */
-.polaroid:nth-child(odd) .polaroid-front::after {
+/* Heart Sticker on ALL Photos */
+.polaroid .polaroid-front::after {
     content: '💕';
     position: absolute;
     top: 25px;
@@ -879,7 +879,7 @@ button span {
     }
     
     /* Heart stickers - slightly smaller on mobile */
-    .polaroid:nth-child(odd) .polaroid-front::after {
+    .polaroid .polaroid-front::after {
         font-size: 2rem;
         top: 20px;
         right: 20px;
