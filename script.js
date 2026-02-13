@@ -14,11 +14,20 @@ const elements = {
     noButton: document.getElementById('noButton'),
     heartsContainer: document.getElementById('heartsContainer'),
     confettiContainer: document.getElementById('confetti'),
-    playAgainButton: document.getElementById('playAgainButton')
+    playAgainButton: document.getElementById('playAgainButton'),
+    carouselTrack: document.getElementById('carouselTrack'),
+    prevBtn: document.getElementById('prevBtn'),
+    nextBtn: document.getElementById('nextBtn'),
+    carouselDots: document.getElementById('carouselDots')
 };
 
 // ===== STATE =====
 let noButtonHoverCount = 0;
+
+// ===== PHOTO CAROUSEL STATE =====
+const TOTAL_PHOTOS = 6;
+let currentSlide = 0;
+let carouselInterval;
 
 // ===== FLOATING HEARTS BACKGROUND =====
 function createFloatingHearts() {
@@ -113,6 +122,9 @@ function showSuccessPage() {
     // Create confetti
     createConfetti();
     
+    // Initialize photo carousel
+    initializeCarousel();
+    
     // Play success sound (optional - you can add an audio file)
     // const audio = new Audio('celebration.mp3');
     // audio.play();
@@ -121,6 +133,64 @@ function showSuccessPage() {
     if (navigator.vibrate) {
         navigator.vibrate([200, 100, 200]);
     }
+}
+
+// ===== PHOTO CAROUSEL FUNCTIONS =====
+function createCarouselDots() {
+    for (let i = 0; i < TOTAL_PHOTOS; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        elements.carouselDots.appendChild(dot);
+    }
+}
+
+function updateDots() {
+    const dots = elements.carouselDots.querySelectorAll('.dot');
+    dots.forEach((dot, index) => {
+        if (index === currentSlide) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    const offset = -currentSlide * 100;
+    elements.carouselTrack.style.transform = `translateX(${offset}%)`;
+    updateDots();
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % TOTAL_PHOTOS;
+    goToSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + TOTAL_PHOTOS) % TOTAL_PHOTOS;
+    goToSlide(currentSlide);
+}
+
+function startCarouselAutoSlide() {
+    carouselInterval = setInterval(nextSlide, 4000); // Auto-slide every 4 seconds
+}
+
+function stopCarouselAutoSlide() {
+    if (carouselInterval) {
+        clearInterval(carouselInterval);
+    }
+}
+
+function initializeCarousel() {
+    createCarouselDots();
+    startCarouselAutoSlide();
+    
+    // Mouse enter/leave to pause/resume auto-slide
+    elements.carouselTrack.addEventListener('mouseenter', stopCarouselAutoSlide);
+    elements.carouselTrack.addEventListener('mouseleave', startCarouselAutoSlide);
 }
 
 // ===== RESET TO QUESTION PAGE =====
@@ -167,6 +237,19 @@ function initializeEventListeners() {
     elements.noButton.addEventListener('click', (e) => {
         e.preventDefault();
         makeNoButtonDodge();
+    });
+    
+    // Carousel navigation buttons
+    elements.prevBtn.addEventListener('click', () => {
+        prevSlide();
+        stopCarouselAutoSlide();
+        setTimeout(startCarouselAutoSlide, 5000); // Resume after 5 seconds
+    });
+    
+    elements.nextBtn.addEventListener('click', () => {
+        nextSlide();
+        stopCarouselAutoSlide();
+        setTimeout(startCarouselAutoSlide, 5000); // Resume after 5 seconds
     });
 }
 
