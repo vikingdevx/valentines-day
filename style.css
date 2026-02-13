@@ -771,9 +771,33 @@ button span {
     animation: heartBeat 1.5s ease-in-out infinite;
 }
 
-/* Zig-Zag Pattern - Photos 1, 4, 5 get bottom-left hearts */
-.polaroid:nth-child(1) .polaroid-front::after,
-.polaroid:nth-child(4) .polaroid-front::after,
+/* Position 1 - Bottom-Left */
+.polaroid:nth-child(1) .polaroid-front::after {
+    top: auto;
+    bottom: 70px;
+    right: auto;
+    left: 25px;
+    transform: rotate(-15deg);
+}
+
+/* Position 3 - Top-Left */
+.polaroid:nth-child(3) .polaroid-front::after {
+    top: 25px;
+    right: auto;
+    left: 25px;
+    transform: rotate(-15deg);
+}
+
+/* Position 4 - Bottom-Right */
+.polaroid:nth-child(4) .polaroid-front::after {
+    top: auto;
+    bottom: 70px;
+    right: 25px;
+    left: auto;
+    transform: rotate(15deg);
+}
+
+/* Position 5 - Bottom-Left */
 .polaroid:nth-child(5) .polaroid-front::after {
     top: auto;
     bottom: 70px;
@@ -902,9 +926,30 @@ button span {
         right: 20px;
     }
     
-    /* Zig-zag pattern on mobile */
-    .polaroid:nth-child(1) .polaroid-front::after,
-    .polaroid:nth-child(4) .polaroid-front::after,
+    /* Position 1 - Bottom-Left */
+    .polaroid:nth-child(1) .polaroid-front::after {
+        top: auto;
+        bottom: 65px;
+        right: auto;
+        left: 20px;
+    }
+    
+    /* Position 3 - Top-Left */
+    .polaroid:nth-child(3) .polaroid-front::after {
+        top: 20px;
+        right: auto;
+        left: 20px;
+    }
+    
+    /* Position 4 - Bottom-Right */
+    .polaroid:nth-child(4) .polaroid-front::after {
+        top: auto;
+        bottom: 65px;
+        right: 20px;
+        left: auto;
+    }
+    
+    /* Position 5 - Bottom-Left */
     .polaroid:nth-child(5) .polaroid-front::after {
         top: auto;
         bottom: 65px;
