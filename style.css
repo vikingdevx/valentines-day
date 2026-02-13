@@ -615,50 +615,167 @@ button span {
         0 0 60px rgba(255, 64, 129, 0.3);
 }
 
-/* Responsive Grid */
+/* Mobile: Tap to Flip */
 @media (max-width: 768px) {
-    .polaroid-container {
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        padding: 1rem;
-    }
-    
-    .polaroid {
-        max-width: 100%;
-    }
-    
-    .polaroid-inner {
-        height: 350px;
-    }
-    
-    .polaroid-front img {
-        height: 250px;
-    }
-    
-    .polaroid-caption {
-        font-size: 1.5rem;
-    }
-    
-    .back-message {
-        font-size: 1.6rem;
-    }
-    
-    .gallery-title {
-        font-size: 2rem;
+    .polaroid:active .polaroid-inner {
+        transform: rotateY(180deg);
     }
 }
 
-@media (max-width: 480px) {
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+    /* Container padding for mobile */
+    .container {
+        padding: 1.5rem;
+    }
+    
+    /* Question page - bigger on mobile */
+    .question-container h1 {
+        font-size: 2.2rem !important;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem !important;
+    }
+    
+    /* Buttons - Much bigger and touch-friendly */
+    .yes-button {
+        padding: 1.2rem 3.5rem !important;
+        font-size: 1.6rem !important;
+        min-width: 200px;
+    }
+    
+    .no-button {
+        padding: 1rem 2.5rem !important;
+        font-size: 1.3rem !important;
+        min-width: 150px;
+    }
+    
+    /* Success page */
+    .celebration {
+        font-size: 4rem !important;
+    }
+    
+    .success-message {
+        font-size: 2rem !important;
+        margin: 1.5rem 0;
+    }
+    
+    .love-message p {
+        font-size: 1.4rem !important;
+        margin: 0.8rem 0;
+    }
+    
+    /* Polaroid Gallery - Single Column, Bigger */
+    .gallery-title {
+        font-size: 2.2rem !important;
+        margin-bottom: 0.5rem;
+    }
+    
+    .gallery-subtitle {
+        font-size: 1.1rem !important;
+        margin-bottom: 2rem;
+    }
+    
     .polaroid-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 2.5rem;
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .polaroid {
+        max-width: 100% !important;
     }
     
     .polaroid-inner {
-        height: 380px;
+        height: 450px !important;
     }
     
     .polaroid-front img {
-        height: 280px;
+        height: 330px !important;
+    }
+    
+    .polaroid-caption {
+        font-size: 2rem !important;
+        margin-top: 18px;
+    }
+    
+    .back-message {
+        font-size: 1.8rem !important;
+        padding: 0 1.5rem;
+    }
+    
+    /* Heart stickers - slightly smaller on mobile */
+    .polaroid:nth-child(odd) .polaroid-front::after {
+        font-size: 2rem;
+        top: 20px;
+        right: 20px;
+    }
+    
+    /* Play Again button - bigger */
+    .play-again-button {
+        padding: 1.2rem 3rem !important;
+        font-size: 1.4rem !important;
+        margin-top: 2.5rem;
+    }
+    
+    /* Background names - optimized for mobile */
+    .names-background {
+        opacity: 0.6;
+    }
+    
+    .name-text {
+        font-size: 1.2rem !important;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 400px) {
+    .question-container h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .yes-button {
+        padding: 1rem 3rem !important;
+        font-size: 1.4rem !important;
+    }
+    
+    .no-button {
+        padding: 0.9rem 2rem !important;
+        font-size: 1.2rem !important;
+    }
+    
+    .polaroid-inner {
+        height: 420px !important;
+    }
+    
+    .polaroid-front img {
+        height: 310px !important;
+    }
+    
+    .polaroid-caption {
+        font-size: 1.8rem !important;
+    }
+    
+    .back-message {
+        font-size: 1.6rem !important;
+    }
+}
+
+/* Landscape mobile - adjust heights */
+@media (max-width: 768px) and (orientation: landscape) {
+    .question-container h1 {
+        font-size: 2rem !important;
+    }
+    
+    .polaroid-inner {
+        height: 380px !important;
+    }
+    
+    .polaroid-front img {
+        height: 280px !important;
     }
 }
 
