@@ -293,26 +293,28 @@ function resetToQuestion() {
     yesButtonScale = 1;
     noButtonScale = 1;
     
-    // Reset button styles
+    // Reset YES button
     elements.yesButton.style.transform = 'scale(1)';
-    elements.noButton.style.transform = 'scale(1)';
     
-    // Reset button positions - MAKE SURE NO IS VISIBLE
-    elements.noButton.style.position = 'relative';
-    elements.noButton.style.left = '0';
-    elements.noButton.style.top = '0';
-    elements.noButton.style.transition = 'all 0.3s ease';
+    // COMPLETELY RESET NO BUTTON - CLEAR ALL STYLES
+    elements.noButton.style.cssText = '';
+    elements.noButton.style.transform = 'scale(1)';
     
     // Reset button order if swapped
     if (buttonsSwapped) {
         const container = document.querySelector('.button-container');
         const yesButton = elements.yesButton;
         const noButton = elements.noButton;
-        container.insertBefore(yesButton, noButton);
+        
+        // Ensure correct order: YES then NO
+        container.innerHTML = '';
+        container.appendChild(yesButton);
+        container.appendChild(noButton);
+        
         buttonsSwapped = false;
     }
     
-    console.log('🔄 Game reset - Ready to play again!');
+    console.log('🔄 Game reset - NO button should be visible now!');
 }
 
 // ===== EVENT LISTENERS =====
