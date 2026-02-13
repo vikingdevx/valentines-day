@@ -41,12 +41,17 @@ function createFloatingHearts() {
 
 // ===== BACKGROUND MUSIC CONTROL =====
 function playMusic() {
+    elements.bgMusic.volume = 0.5; // Set volume to 50%
     elements.bgMusic.play().then(() => {
         musicPlaying = true;
         elements.musicToggle.classList.remove('muted');
+        console.log('✅ Music playing successfully!');
     }).catch(err => {
-        console.log('Music autoplay blocked. Click music button to play.');
+        console.log('⚠️ Music autoplay blocked by browser. Click the 🎵 button!');
         musicPlaying = false;
+        elements.musicToggle.classList.add('muted');
+        // Show the music button more prominently
+        elements.musicToggle.style.animation = 'musicPulse 1s ease-in-out infinite';
     });
 }
 
@@ -55,10 +60,15 @@ function toggleMusic() {
         elements.bgMusic.pause();
         musicPlaying = false;
         elements.musicToggle.classList.add('muted');
+        console.log('🔇 Music paused');
     } else {
-        elements.bgMusic.play();
-        musicPlaying = true;
-        elements.musicToggle.classList.remove('muted');
+        elements.bgMusic.play().then(() => {
+            musicPlaying = true;
+            elements.musicToggle.classList.remove('muted');
+            console.log('🎵 Music playing!');
+        }).catch(err => {
+            console.log('❌ Error playing music:', err);
+        });
     }
 }
 
