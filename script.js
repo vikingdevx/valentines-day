@@ -13,7 +13,8 @@ const elements = {
     yesButton: document.getElementById('yesButton'),
     noButton: document.getElementById('noButton'),
     heartsContainer: document.getElementById('heartsContainer'),
-    confettiContainer: document.getElementById('confetti')
+    confettiContainer: document.getElementById('confetti'),
+    playAgainButton: document.getElementById('playAgainButton')
 };
 
 // ===== STATE =====
@@ -122,11 +123,35 @@ function showSuccessPage() {
     }
 }
 
+// ===== RESET TO QUESTION PAGE =====
+function resetToQuestion() {
+    // Remove all confetti
+    elements.confettiContainer.innerHTML = '';
+    
+    // Switch pages
+    elements.successPage.classList.remove('active');
+    elements.questionPage.classList.add('active');
+    
+    // Reset no button position and scale
+    noButtonHoverCount = 0;
+    elements.noButton.style.transform = 'scale(1)';
+    if (window.innerWidth > 768) {
+        elements.noButton.style.position = 'absolute';
+        elements.noButton.style.left = '';
+        elements.noButton.style.top = '';
+    }
+}
+
 // ===== EVENT LISTENERS =====
 function initializeEventListeners() {
     // Yes button click
     elements.yesButton.addEventListener('click', () => {
         showSuccessPage();
+    });
+    
+    // Play again button click
+    elements.playAgainButton.addEventListener('click', () => {
+        resetToQuestion();
     });
     
     // No button hover/touch - make it dodge

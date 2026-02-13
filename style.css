@@ -425,6 +425,32 @@ button span {
     }
 }
 
+/* ===== PLAY AGAIN BUTTON ===== */
+.play-again-button {
+    margin-top: 3rem;
+    background: linear-gradient(135deg, var(--purple-gradient-start), var(--purple));
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeIn 1.5s ease-out backwards;
+    animation-delay: 1.2s;
+    box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+}
+
+.play-again-button:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 12px 35px rgba(156, 39, 176, 0.6);
+}
+
+.play-again-button:active {
+    transform: scale(0.98);
+}
+
 /* ===== CONFETTI ===== */
 .confetti {
     position: fixed;
