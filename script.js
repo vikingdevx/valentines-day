@@ -14,11 +14,15 @@ const elements = {
     noButton: document.getElementById('noButton'),
     heartsContainer: document.getElementById('heartsContainer'),
     confettiContainer: document.getElementById('confetti'),
-    playAgainButton: document.getElementById('playAgainButton')
+    playAgainButton: document.getElementById('playAgainButton'),
+    bgMusic: document.getElementById('bgMusic'),
+    musicToggle: document.getElementById('musicToggle'),
+    rosePetals: document.getElementById('rosePetals')
 };
 
 // ===== STATE =====
 let noButtonHoverCount = 0;
+let musicPlaying = false;
 
 // ===== FLOATING HEARTS BACKGROUND =====
 function createFloatingHearts() {
@@ -33,6 +37,50 @@ function createFloatingHearts() {
         heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
         elements.heartsContainer.appendChild(heart);
     }
+}
+
+// ===== BACKGROUND MUSIC CONTROL =====
+function playMusic() {
+    elements.bgMusic.play().then(() => {
+        musicPlaying = true;
+        elements.musicToggle.classList.remove('muted');
+    }).catch(err => {
+        console.log('Music autoplay blocked. Click music button to play.');
+        musicPlaying = false;
+    });
+}
+
+function toggleMusic() {
+    if (musicPlaying) {
+        elements.bgMusic.pause();
+        musicPlaying = false;
+        elements.musicToggle.classList.add('muted');
+    } else {
+        elements.bgMusic.play();
+        musicPlaying = true;
+        elements.musicToggle.classList.remove('muted');
+    }
+}
+
+// ===== ROSE PETALS ANIMATION =====
+function createRosePetals() {
+    const petals = ['🌹', '🌸', '💮', '🏵️', '💐'];
+    
+    setInterval(() => {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        petal.style.opacity = Math.random() * 0.5 + 0.3;
+        
+        elements.rosePetals.appendChild(petal);
+        
+        // Remove petal after animation
+        setTimeout(() => {
+            petal.remove();
+        }, 8000);
+    }, 300);
 }
 
 // ===== NO BUTTON DODGE LOGIC =====
@@ -113,6 +161,12 @@ function showSuccessPage() {
     // Create confetti
     createConfetti();
     
+    // Start romantic music
+    playMusic();
+    
+    // Start rose petals animation
+    createRosePetals();
+    
     // Polaroid gallery is CSS-only, no JS needed!
     
     // Play success sound (optional - you can add an audio file)
@@ -170,6 +224,9 @@ function initializeEventListeners() {
         e.preventDefault();
         makeNoButtonDodge();
     });
+    
+    // Music toggle
+    elements.musicToggle.addEventListener('click', toggleMusic);
 }
 
 // ===== INITIALIZE APP =====
