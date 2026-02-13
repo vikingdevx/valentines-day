@@ -239,6 +239,47 @@ function initializeEventListeners() {
     elements.musicToggle.addEventListener('click', toggleMusic);
 }
 
+// ===== SMART AUDIO MANAGEMENT FOR VIDEO =====
+const dancingVideo = document.getElementById('dancingVideo');
+
+if (dancingVideo) {
+    // Pause background music when video starts playing
+    dancingVideo.addEventListener('play', () => {
+        if (musicPlaying) {
+            elements.bgMusic.pause();
+            console.log('🎬 Video playing - Music paused');
+        }
+    });
+    
+    // Resume background music when video is paused
+    dancingVideo.addEventListener('pause', () => {
+        if (musicPlaying) {
+            elements.bgMusic.play();
+            console.log('⏸️ Video paused - Music resumed');
+        }
+    });
+    
+    // Resume background music when video ends
+    dancingVideo.addEventListener('ended', () => {
+        if (musicPlaying) {
+            elements.bgMusic.play();
+            console.log('✅ Video ended - Music resumed');
+        }
+    });
+    
+    // Pause video when scrolled out of view (performance optimization)
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting && !dancingVideo.paused) {
+                dancingVideo.pause();
+                console.log('📜 Video scrolled out of view - Paused');
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    videoObserver.observe(dancingVideo);
+}
+
 // ===== INITIALIZE APP =====
 function init() {
     createFloatingHearts();
