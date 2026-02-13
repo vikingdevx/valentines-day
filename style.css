@@ -950,6 +950,89 @@ button span {
     }
 }
 
+/* ===== FEATURED VIDEO SECTION ===== */
+.featured-video-section {
+    margin-top: 4rem;
+    width: 100%;
+    max-width: 900px;
+    animation: fadeIn 2s ease-out backwards;
+    animation-delay: 2s;
+}
+
+.video-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--red-gradient-start), var(--secondary-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+}
+
+.video-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-style: italic;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255, 64, 129, 0.1), rgba(201, 64, 255, 0.1));
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 64, 129, 0.4);
+    box-shadow: 
+        0 20px 60px rgba(255, 64, 129, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.video-container:hover {
+    transform: scale(1.02);
+    box-shadow: 
+        0 25px 80px rgba(255, 64, 129, 0.5),
+        0 0 60px rgba(255, 64, 129, 0.3);
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 17px;
+}
+
+/* Video controls styling */
+.video-container video::-webkit-media-controls-panel {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+}
+
+@media (max-width: 768px) {
+    .featured-video-section {
+        margin-top: 3rem;
+    }
+    
+    .video-title {
+        font-size: 2.2rem !important;
+    }
+    
+    .video-subtitle {
+        font-size: 1.1rem !important;
+        margin-bottom: 1.5rem;
+    }
+    
+    .video-container {
+        max-width: 100%;
+        margin: 0 1rem;
+    }
+}
+
 /* ===== PLAY AGAIN BUTTON ===== */
 .play-again-button {
     margin-top: 3rem;
