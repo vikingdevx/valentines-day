@@ -24,6 +24,144 @@ const elements = {
 let noButtonHoverCount = 0;
 let musicPlaying = false;
 
+// ===== PROGRESSIVE TEASING GAME (3 STAGES) =====
+let gameStage = 0;
+let yesButtonScale = 1;
+let noButtonScale = 1;
+let buttonsSwapped = false;
+
+function makeNoButtonDodge() {
+    const button = elements.noButton;
+    const yesButton = elements.yesButton;
+    
+    gameStage++;
+    
+    // STAGE 1: SWAP POSITIONS (First hover - Confusion!)
+    if (gameStage === 1) {
+        swapButtons();
+        showTeasingMessage("Oops! They switched places! 😏");
+        moveNoButton();
+        return;
+    }
+    
+    // STAGE 2: SIZE CHANGES (Second hover - The Hint!)
+    if (gameStage === 2) {
+        yesButtonScale = 1.3;
+        noButtonScale = 0.85;
+        yesButton.style.transform = `scale(${yesButtonScale})`;
+        button.style.transform = `scale(${noButtonScale})`;
+        showTeasingMessage("Hmm... which one feels right? 🤔");
+        moveNoButton(1.5);
+        return;
+    }
+    
+    // STAGE 3+: OBVIOUS CHOICE (Third hover onwards)
+    if (gameStage >= 3) {
+        yesButtonScale = Math.min(1.6, yesButtonScale + 0.12);
+        noButtonScale = Math.max(0.7, noButtonScale - 0.06); // Minimum 70% size - still clickable!
+        
+        yesButton.style.transform = `scale(${yesButtonScale})`;
+        button.style.transform = `scale(${noButtonScale})`;
+        
+        if (gameStage === 3) {
+            showTeasingMessage("Come on... it's obvious! 💕");
+        } else if (gameStage === 5) {
+            showTeasingMessage("Just click YES already! 😈");
+        } else if (gameStage >= 7) {
+            showTeasingMessage("Peru... you know the answer! 💖");
+        }
+        
+        moveNoButton(2); // Move faster!
+    }
+}
+
+function swapButtons() {
+    const container = document.querySelector('.button-container');
+    const yesButton = elements.yesButton;
+    const noButton = elements.noButton;
+    
+    if (!buttonsSwapped) {
+        container.insertBefore(noButton, yesButton);
+        buttonsSwapped = true;
+    } else {
+        container.insertBefore(yesButton, noButton);
+        buttonsSwapped = false;
+    }
+}
+
+function moveNoButton(speedMultiplier = 1) {
+    const button = elements.noButton;
+    const yesButton = elements.yesButton;
+    
+    // Calculate random position
+    const maxX = window.innerWidth - 200;
+    const maxY = window.innerHeight - 200;
+    const minX = 50;
+    const minY = 50;
+    
+    let newX = Math.random() * (maxX - minX) + minX;
+    let newY = Math.random() * (maxY - minY) + minY;
+    
+    // Avoid YES button area
+    const yesRect = yesButton.getBoundingClientRect();
+    const distance = Math.sqrt(
+        Math.pow(newX - yesRect.left, 2) + 
+        Math.pow(newY - yesRect.top, 2)
+    );
+    
+    if (distance < 200 * speedMultiplier) {
+        newX = newX < yesRect.left ? newX - 150 : newX + 150;
+        newY = newY < yesRect.top ? newY - 150 : newY + 150;
+    }
+    
+    // Keep within bounds
+    newX = Math.max(minX, Math.min(maxX, newX));
+    newY = Math.max(minY, Math.min(maxY, newY));
+    
+    button.style.position = 'fixed';
+    button.style.left = newX + 'px';
+    button.style.top = newY + 'px';
+    button.style.transition = `all ${0.3 / speedMultiplier}s ease`;
+}
+
+function showTeasingMessage(text) {
+    // Create temporary teasing message
+    const msg = document.createElement('div');
+    msg.textContent = text;
+    msg.style.cssText = `
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 64, 129, 0.95);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-size: 1.3rem;
+        font-weight: 600;
+        z-index: 1000;
+        animation: fadeInOutMessage 2s ease;
+        box-shadow: 0 10px 40px rgba(255, 64, 129, 0.6);
+    `;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
+}
+
+// Add CSS animation for teasing message
+if (!document.getElementById('teasing-message-styles')) {
+    const messageStyle = document.createElement('style');
+    messageStyle.id = 'teasing-message-styles';
+    messageStyle.textContent = `
+        @keyframes fadeInOutMessage {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        }
+    `;
+    document.head.appendChild(messageStyle);
+}
+
 // ===== FLOATING HEARTS BACKGROUND =====
 function createFloatingHearts() {
     const heartEmojis = ['❤️', '💕', '💖', '💗', '💓', '💝'];
@@ -93,54 +231,6 @@ function createRosePetals() {
     }, 300);
 }
 
-// ===== NO BUTTON DODGE LOGIC =====
-function makeNoButtonDodge() {
-    const button = elements.noButton;
-    const container = document.querySelector('.button-container');
-    
-    // Get container bounds
-    const containerRect = container.getBoundingClientRect();
-    const buttonRect = button.getBoundingClientRect();
-    
-    // Calculate safe movement area
-    const maxX = window.innerWidth - buttonRect.width - 40;
-    const maxY = window.innerHeight - buttonRect.height - 40;
-    const minX = 20;
-    const minY = 20;
-    
-    // Generate random position
-    let newX = Math.random() * (maxX - minX) + minX;
-    let newY = Math.random() * (maxY - minY) + minY;
-    
-    // Make sure it's not too close to the Yes button
-    const yesButtonRect = elements.yesButton.getBoundingClientRect();
-    const distance = Math.sqrt(
-        Math.pow(newX - yesButtonRect.left, 2) + 
-        Math.pow(newY - yesButtonRect.top, 2)
-    );
-    
-    if (distance < CONFIG.NO_BUTTON_DODGE_DISTANCE) {
-        // Move away from Yes button
-        newX = newX < yesButtonRect.left ? newX - 100 : newX + 100;
-        newY = newY < yesButtonRect.top ? newY - 100 : newY + 100;
-        
-        // Keep within bounds
-        newX = Math.max(minX, Math.min(maxX, newX));
-        newY = Math.max(minY, Math.min(maxY, newY));
-    }
-    
-    button.style.left = newX + 'px';
-    button.style.top = newY + 'px';
-    
-    // Increment hover count and shrink button periodically
-    noButtonHoverCount++;
-    if (noButtonHoverCount % CONFIG.NO_BUTTON_SHRINK_INTERVAL === 0) {
-        const currentScale = parseFloat(button.style.transform?.match(/scale\(([\d.]+)\)/)?.[1] || 1);
-        const newScale = Math.max(0.5, currentScale - 0.1);
-        button.style.transform = `scale(${newScale})`;
-    }
-}
-
 // ===== CONFETTI ANIMATION =====
 function createConfetti() {
     const colors = ['#ff0844', '#ff4081', '#f50057', '#e91e63', '#9c27b0', '#ffeb3b', '#00e676'];
@@ -198,13 +288,26 @@ function resetToQuestion() {
     elements.successPage.classList.remove('active');
     elements.questionPage.classList.add('active');
     
-    // Reset no button position and scale
-    noButtonHoverCount = 0;
+    // Reset game state
+    gameStage = 0;
+    yesButtonScale = 1;
+    noButtonScale = 1;
+    buttonsSwapped = false;
+    
+    // Reset button styles
+    elements.yesButton.style.transform = 'scale(1)';
     elements.noButton.style.transform = 'scale(1)';
+    
+    // Reset button positions
     if (window.innerWidth > 768) {
         elements.noButton.style.position = 'absolute';
         elements.noButton.style.left = '';
         elements.noButton.style.top = '';
+    }
+    
+    // Reset button order if swapped
+    if (buttonsSwapped) {
+        swapButtons();
     }
 }
 
